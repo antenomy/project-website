@@ -6,7 +6,9 @@
   <title>lucasgrant.com</title>
   <link rel="icon" href="./icon.ico">
 
-  <!-- #0f172a 
+  <!-- 
+    change page title?
+    #0f172a 
     #1e143e
     #120622
     #1e1437
@@ -17,7 +19,7 @@
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #000000, #120622, #230f41);
+      background: linear-gradient(335deg, #000000, #120622, #230f41);
       color: #f8fafc;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
@@ -45,7 +47,56 @@
     }
   </style>
 </head>
+
+
+
 <body>
+
+  <script>
+    let max_angle = 360;
+    let angle = 135;
+    let angle_delta = 0;
+    let angle_delta_max = 2;
+    let angle_goal = Math.random() * max_angle;
+    
+    let max_offset = 100;
+    let offset = 80;
+    let offset_delta = 0;
+    let offset_delta_max = 2;
+    let offset_goal = 0;
+
+
+    setInterval(() => {
+      offset_delta = Math.sign((offset_goal - offset)) * Math.max(Math.min((((offset_goal - offset)/max_offset) ** 2), offset_delta_max), 0.1);
+      angle_delta  = Math.sign((angle_goal  - offset)) * Math.max(Math.min((((angle_goal  - offset)/max_angle)  ** 2), angle_delta_max), 0.1);
+
+      offset = Math.min(Math.max((offset_delta + offset), 0), max_offset);
+      angle  = (angle_delta + angle) % max_angle;
+
+      const stop1 = (offset - max_offset/2) + '%';
+      const stop2 = (offset - max_offset/4) + '%';
+      const stop3 = offset + '%';
+
+      //console.log(offset_delta);
+      //console.log(offset_goal);
+      //console.log(offset);
+
+      document.body.style.background = `linear-gradient(${angle}deg, #000000 ${stop1}, #120622 ${stop2}, #230f41) ${stop3}`;
+
+      if (Math.abs(offset_goal - offset) <= 1 + max_offset/100) {
+        offset_goal = Math.random() * max_offset;
+        //console.log(`New goal: ${offset_goal}`);
+      }
+
+      if (Math.abs(angle_goal - angle) <= 1 + max_angle/100) {
+        angle_goal = Math.random() * max_angle;
+      }
+      
+    }, 33);
+    
+
+  </script>
+  
   <h1>lucasgrant.com</h1>
   <p>is currently under construction.</p>
   <div class="logo">🌱 Stay tuned for more updates.</div>
